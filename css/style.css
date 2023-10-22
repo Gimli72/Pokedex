@@ -422,14 +422,14 @@ body {
 
 
 
-@media (max-width: 360px) {
+@media (max-width: 390px) {
     .card {
         height: 760px;
     }
 }
 
 
-@media (max-width: 360px) {
+@media (max-width: 390px) {
     .card {
         max-height: 760px;
         width: 100vw;

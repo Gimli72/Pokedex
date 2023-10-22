@@ -90,7 +90,6 @@ function showAllPokemons() {
         getElementById('overview').innerHTML += pokemonOverviewTemplate(element);
     }
     console.timeEnd('Show all Pokemons');
-    getElementById('searchValue').value = '';
 }
 
 

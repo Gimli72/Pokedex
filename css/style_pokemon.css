@@ -1,0 +1,124 @@
+.main {
+    padding: 30px;
+    max-width: 1680px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.overview {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    gap: 15px;
+}
+
+.pokemon {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 200px;
+    position: relative;
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px solid rgb(232, 232, 232);
+    color: rgb(232, 232, 232);
+    background-color: var(--bg-color-grass);
+    z-index: 0;
+}
+
+.pokemon::before {
+    content: "";
+    background-image: url('../img/pokeball-100.png');
+    background-repeat: no-repeat;
+    background-size: 65%;
+    background-position-y: 155%;
+    background-position-x: 120%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.pokemon_overview_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pokemon_overview_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pokemon_overview_header h2 {
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.pokemon_overview_img img {
+    width: 150px;
+    cursor: pointer;
+}
+
+.pokemon_overview_img img:hover {
+    scale: 1.05;
+}
+
+.pokemon_overview_types {
+    display: flex;
+    flex-direction: column;
+}
+
+.pokemon_overview_types span {
+    background-color: var(--bg-color-fire-light);
+    font-size: small;
+    font-weight: 200;
+    padding: 5px 20px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+
+@media (max-width: 1520px) {
+    .overview {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1220px) {
+.overview {
+        grid-template-columns: repeat(3, 1fr);
+}
+
+}
+
+@media (max-width: 915px) {
+    .overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 620px) {
+    .main {
+        padding: 15px;
+    }
+    .overview {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+                .header {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+}

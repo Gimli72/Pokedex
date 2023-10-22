@@ -42,7 +42,7 @@ async function showPokemon(pokemonId) {
  */
 function handleOutsideClick(event) {
     const card = getElementById('card');
-    const closeButton = getElementById('arrow');
+    const closeButton = getElementById('close');
     if (!card.contains(event.target) && event.target !== closeButton) {
         document.removeEventListener("click", handleOutsideClick);
         closeDetails();

@@ -335,7 +335,7 @@ body {
 }
 
 #heart,
-#arrow {
+#close {
     cursor: pointer;
     z-index: 1;
 }

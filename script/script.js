@@ -62,12 +62,13 @@ function closeDetails() {
  * @description Load basic pokemon data from the API
  */
 async function loadAllPokemon() {
-    for (let j = 0; j <= 112; j++) {
+    for (let j = 0; j <= 10; j++) {
         for (let i = 1 + (j * 9); i <= ((1 + j) * 9); i++) {
             const baseUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
             const url = new URL(i, baseUrl);
             const res = await fetch(url.toJSON());
             const pokemonData = await res.json();
+
             const id = pokemonData.id;
             const name = pokemonData.name;
             const types = pokemonData.types.map(type => type.type.name).join(', ');
@@ -86,7 +87,7 @@ function showAllPokemons() {
     getElementById('overview').innerHTML = '';
     for (let i = 0; i < pokemonAll.length; i++) {
         const element = pokemonAll[i];
-        getElementById('overview').innerHTML += pokemonOverviewTemplate(element)
+        getElementById('overview').innerHTML += pokemonOverviewTemplate(element);
     }
     console.timeEnd('Show all Pokemons');
     getElementById('searchValue').value = '';
@@ -95,7 +96,7 @@ function showAllPokemons() {
 
 /**
  * @description Loading basic data from a specific pokeman from the API
- * @param {string} pokemon 
+ * @param {number} pokemon 
  */
 async function fetchPokemon(pokemon) {
     const baseUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
@@ -107,7 +108,7 @@ async function fetchPokemon(pokemon) {
 
 /**
  * @description Loading species data from a specific pokeman from the API
- * @param {string} pokemon 
+ * @param {number} pokemon 
  * @returns 
  */
 async function fetchEvolution(pokemon) {
@@ -347,15 +348,4 @@ function pokemonEvolutionChain() {
         }
     }
     return evolutionChain;
-}
-
-
-/**
- * Like On/Off - Value will NOT be stored.
- */
-function heartOnOff() {
-    let currentImage = getImageElementById('heart').src;
-    currentImage = currentImage.substring(currentImage.lastIndexOf('/') + 1);
-    const newImage = currentImage === 'heart-open-50.png' ? 'heart-close-50.png' : 'heart-open-50.png';
-    getImageElementById('heart').src = 'img/' + newImage;
 }

@@ -2,10 +2,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Monterrat', sans-serif;
-    background-image: url(../img/pokedex_bg.jpg);
+    /* background-image: url(../img/pokedex_bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed; */
 }
 
 :root {
@@ -162,11 +162,12 @@ body {
 
 .pokemon_image img {
     height: 220px;
+        transition: 250ms ease-in-out;
 }
 
 .pokemon_image img:hover {
     transform: scale(1.05);
-    transition: 250ms;
+    transition: 250ms ease-in-out;
 }
 
 .pokemon_details_nav {
@@ -286,12 +287,14 @@ body {
 
 .evolution_header_img_right img,
 .evolution_header_img_left img {
+        transition: 250ms ease-in-out;
     width: 80px;
 }
 
 .evolution_header_img_right img:hover,
 .evolution_header_img_left img:hover {
     transform: scale(1.08);
+    transition: 250ms ease-in-out;
     cursor: pointer;
 }
 
@@ -341,20 +344,21 @@ body {
     width: 100vw;
     height: 100px;
     text-align: center;
-    background-image: url(../img/pokedex_bg.jpg);
+    background-color: white;
+    /* background-image: url(../img/pokedex_bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed; */
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid black;
 }
 
 .header_background {
@@ -364,7 +368,7 @@ body {
 }
 
 .headline {
-    color: white;
+    color: black;
     font-size: xx-large;
     margin-left: 20px;
 }
@@ -424,14 +428,14 @@ body {
 
 @media (max-width: 390px) {
     .card {
-        height: 760px;
+        height: 750px;
     }
 }
 
 
 @media (max-width: 390px) {
     .card {
-        max-height: 760px;
+        max-height: 750px;
         width: 100vw;
         border-top-right-radius: 0;
         border-top-left-radius: 0;

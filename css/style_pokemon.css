@@ -68,10 +68,12 @@
 .pokemon_overview_img img {
     width: 150px;
     cursor: pointer;
+    transition: 250ms ease-in-out;
 }
 
 .pokemon_overview_img img:hover {
     scale: 1.05;
+    transition: 250ms ease-in-out;
 }
 
 .pokemon_overview_types {

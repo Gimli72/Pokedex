@@ -428,14 +428,14 @@ body {
 
 @media (max-width: 390px) {
     .card {
-        height: 750px;
+        height: 760px;
     }
 }
 
 
 @media (max-width: 390px) {
     .card {
-        max-height: 750px;
+        max-height: 760px;
         width: 100vw;
         border-top-right-radius: 0;
         border-top-left-radius: 0;

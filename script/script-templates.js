@@ -39,8 +39,8 @@ const aboutTemplate = () => /*html*/ `
             <span class="about">Habitat</span>
         </div>
         <div class="about_right">
-            <span class="about_value">${currentPokemon.height*10} cm</span>
-            <span class="about_value">${currentPokemon.weight/10} kg</span>
+            <span class="about_value">${currentPokemon.height * 10} cm</span>
+            <span class="about_value">${currentPokemon.weight / 10} kg</span>
             <span class="about_value" id="abilities"></span>
             <span><br><br></span>
             <span class="about_value"><span class="male">♂ ${100 - (currentPokemonSpecies.gender_rate * 12.5)}%</span> <span class="female">♀ ${currentPokemonSpecies.gender_rate * 12.5}%</span></span>
@@ -148,7 +148,7 @@ const pokemonOverviewTemplate = (element) => /*html*/ `
         <div class="pokemon_overview_footer">
             <div class="pokemon_overview_types">
                 <span style="background-color: ${element.color.lightPrimary}; text-align: center">${showFirstLetterUppercase(element.types.primary)}</span><br>
-                ${element.types.secondary ? `<span style="background-color: ${element.color.lightSecondary}; text-align: center">${showFirstLetterUppercase(element.types.secondary)}</span>`: ``}
+                ${element.types.secondary ? `<span style="background-color: ${element.color.lightSecondary}; text-align: center">${showFirstLetterUppercase(element.types.secondary)}</span>` : ``}
                 
             </div>
             <div class="pokemon_overview_img" >

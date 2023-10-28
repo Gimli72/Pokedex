@@ -291,37 +291,19 @@ function closeDetails() {
 
 
 /**
- * @description Load basic pokemon data from the API
- */
-async function loadAllPokemon() {
-    for (let j = 0; j <= 112; j++) {
-        for (let i = 1 + (j * 9); i <= ((1 + j) * 9); i++) {
-            const baseUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
-            const url = new URL(i, baseUrl);
-            const res = await fetch(url.toJSON());
-            const pokemonData = await res.json();
-            const id = pokemonData.id;
-            const name = pokemonData.name;
-            const types = pokemonData.types.map(type => type.type.name).join(', ');
-            const pokemonInfo = { id, name, types };
-            pokemonAll.push(pokemonInfo);
-        }
-    }
-}
-
-
-/**
  * @description Show all Pokemon
  */
-function showAllPokemons() {    
-    console.time('Show all Pokemons');
-    getElementById('overview').innerHTML = '';
-    for (let i = 0; i < pokemonAll.length; i++) {
-        const element = pokemonAll[i];
-        getElementById('overview').innerHTML += pokemonOverviewTemplate(element)
-    }
-    console.timeEnd('Show all Pokemons');
-    getElementById('searchValue').value = '';
+function showAllPokemons() {
+    pokemonAll.forEach((element, index) => {
+        const startindex = loadedPokemon;
+        const endindex = startindex + chunk;
+        const maxindex = 1017;
+        if (index >= startindex && index < endindex && index < maxindex) {
+            element.color = settingPokemonTypeColors(element);
+            getElementById('overview').innerHTML += pokemonOverviewTemplate(element);
+        }
+    })
+    loadedPokemon += 50;
 }
 
 

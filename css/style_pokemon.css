@@ -29,6 +29,7 @@
     color: rgb(232, 232, 232);
     background-color: var(--bg-color-grass);
     z-index: 0;
+    box-sizing: content-box;
 }
 
 .pokemon::before {

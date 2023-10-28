@@ -68,10 +68,12 @@
 .pokemon_overview_img img {
     width: 150px;
     cursor: pointer;
+    transition: 250ms ease-in-out;
 }
 
 .pokemon_overview_img img:hover {
     scale: 1.05;
+    transition: 250ms ease-in-out;
 }
 
 .pokemon_overview_types {
@@ -96,9 +98,9 @@
 }
 
 @media (max-width: 1220px) {
-.overview {
+    .overview {
         grid-template-columns: repeat(3, 1fr);
-}
+    }
 
 }
 
@@ -112,13 +114,54 @@
     .main {
         padding: 15px;
     }
+
     .overview {
         grid-template-columns: repeat(1, 1fr);
     }
 
-                .header {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                }
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 490px) {
+
+    .main {
+        padding: 0;
+        margin-top: 10px;
+              
+    }
+
+    .overview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+
+    }
+
+    .pokemon {
+        width: 130px;
+        height: 100px;
+    }
+
+    .pokemon_overview_img img {
+        width: 70px;
+    }
+
+    .pokemon_overview_types span {
+        font-size: x-small;
+        font-weight: 200;
+        padding: 5px 10px;
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+
+    .pokemon_overview_header h2 {
+        font-size: 15px;
+    }
+
+    .pokemon_overview_id {
+        font-size: 12px;
+    }
 }

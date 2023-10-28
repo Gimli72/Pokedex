@@ -5,7 +5,7 @@
  * @returns html code
  */
 const detailsNavTemplate = () => /*html*/ `
-    <span class="menu_point menu_about active" onclick="renderAbout('about')">About</span>
+    <span class="menu_point menu_about active" onclick="renderMenuAbout('about')">About</span>
     <span class="menu_point menu_baseStats" onclick="renderBaseStats('baseStats')">Base Stats</span>
     ${currentPokemonEvolution.chain.evolves_to.length ? `<span class="menu_point menu_evolution" onclick="renderEvolution('evolution')">Evolution</span>` : ''}
     <span class="menu_point menu_moves" onclick="renderMoves('moves')">Moves</span>
@@ -141,14 +141,14 @@ const renderEvolutionTemplateLvl2 = (evolutionChain) => /*html*/ `
  * @returns 
  */
 const pokemonOverviewTemplate = (element) => /*html*/ `
-    <div class="pokemon" style="background-color: var(--bg-color-${element.types.split(',')[0]})">
+    <div class="pokemon" style="background-color: ${element.color.colorDefault}">
         <div class="pokemon_overview_header">
             <h2 class="pokemon_overview_name">${showFirstLetterUppercase(element.name)}</h2> <span class="pokemon_overview_id">#${element.id.toString().padStart(3, '0')}</span>
         </div>
         <div class="pokemon_overview_footer">
             <div class="pokemon_overview_types">
-                <span style="background-color: var(--bg-color-${element.types.split(',')[0]}-light); text-align: center">${showFirstLetterUppercase(element.types.split(',')[0])}</span><br>
-                ${element.types.split(',')[1] ? `<span style="background-color: var(--bg-color-${element.types.split(',')[1]}-light); text-align: center">${showFirstLetterUppercase(element.types.split(', ')[1])}</span>`: ``}
+                <span style="background-color: ${element.color.lightPrimary}; text-align: center">${showFirstLetterUppercase(element.types.primary)}</span><br>
+                ${element.types.secondary ? `<span style="background-color: ${element.color.lightSecondary}; text-align: center">${showFirstLetterUppercase(element.types.secondary)}</span>`: ``}
                 
             </div>
             <div class="pokemon_overview_img" >

@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="./css/style_pokemon.css">
 
     <!-- Loading JS files -->
-    <script src="./script/script-standard.js" defer></script>
-    <script src="./script/script-templates.js" defer></script>
-    <script src="./script/script.js" defer></script>
+    <script src="./script/script-standard.js"></script>
+    <script src="./script/script-templates.js"></script>
+    <script src="./script/script.js"></script>
 </head>
 
 <body onload="init()" id="body">
@@ -24,24 +24,16 @@
             <div class="header_img"><img src="./img/pokeball-48.png" alt=""></div>
             <div class="headline">Pokedex</div>
         </div>
-        <div class="search">
-            <input type="text" id="searchValue" onchange="showAllPokemons()">
-            <button onclick="showAllPokemons()" id="searchButton">Search</button>
-            <button onclick="showAllPokemons()" id="showAllButton">Show all</button>
-        </div>
     </div>
     <div class="main">
-        <div class="loadBall" id="loadBall" style="display: none;">
-            <div class="ball"></div>
-        </div>
         <div class="overview" id="overview">
         </div>
         <div class="content" id="content" style="display: none;">
             <div class="card" id="card">
                 <div class="pokemon_header">
                     <div class="pokemon_header_nav">
-                        <img src="./img/arrow-left-50.png" alt="" id="arrow" onclick="closeDetails()">
-                        <img src="./img/heart-open-50.png" alt="" id="heart" onclick="heartOnOff()">
+                        <img src="./img/close-50.png" alt="" id="close" onclick="closeDetails()">
+                        <img src="./img/heart-open-50.png" alt="">
                     </div>
                     <div class="pokemon_header_info">
                         <div>
@@ -66,7 +58,7 @@
         </div>
     </div>
     <!-- Loading Charts.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>

@@ -4,32 +4,264 @@
 /** @typedef {'about' | 'baseStats' | 'evolution' | 'moves'} Menu */
 
 
-let currentPokemon;
-let currentPokemonSpecies;
-let currentPokemonEvolution;
+let currentPokemon = {};
+let currentPokemonSpecies = {};
+let currentPokemonEvolution = {};
+let currentPokemonColors = {};
 let pokemonAll = [];
+let loadedPokemon = 0;
+let chunk = 50;
+
+
+/**
+* @typedef {Object} Type
+* @property {number} id 
+* @property {string} type
+* @property {{ default: string, light: string }}  color
+* @property {{ primary: string[], secondary: string[] }} pokemons
+*/
+
+
+/**
+ * @type {Type[]} 
+ */
+const pokemonTypes = [
+    {
+        id: 1,
+        type: 'normal',
+        color: {
+            default: '#A8A878',
+            light: '#C6C6A7'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 2,
+        type: 'fighting',
+        color: {
+            default: '#C03028',
+            light: '#D67873'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 3,
+        type: 'flying',
+        color: {
+            default: '#A890EF',
+            light: '#A890F0'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 4,
+        type: 'poison',
+        color: {
+            default: '#A041A0',
+            light: '#C183C1'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 5,
+        type: 'ground',
+        color: {
+            default: '#E3C76A',
+            light: '#EAD69D'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 6,
+        type: 'rock',
+        color: {
+            default: '#B8A038',
+            light: '#D1C17C'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 7,
+        type: 'bug',
+        color: {
+            default: '#A8B820',
+            light: '#C6D16E'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 8,
+        type: 'ghost',
+        color: {
+            default: '#705898',
+            light: '#A292B6'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 9,
+        type: 'steel',
+        color: {
+            default: '#B8B8D0',
+            light: '#D1D1E0'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 10,
+        type: 'fire',
+        color: {
+            default: '#F08031',
+            light: '#F5AC78'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 11,
+        type: 'water',
+        color: {
+            default: '#6890F0',
+            light: '#9DB7F5'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 12,
+        type: 'grass',
+        color: {
+            default: '#78C850',
+            light: '#A7DB8D'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 13,
+        type: 'electric',
+        color: {
+            default: '#F8D031',
+            light: '#FAE078'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 14,
+        type: 'psychic',
+        color: {
+            default: '#F85888',
+            light: '#FA92B3'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 15,
+        type: 'ice',
+        color: {
+            default: '#98D8D8',
+            light: '#BCE6E6'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 16,
+        type: 'dragon',
+        color: {
+            default: '#7038F7',
+            light: '#A27DFA'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 17,
+        type: 'dark',
+        color: {
+            default: '#705848',
+            light: '#A29288'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    },
+    {
+        id: 18,
+        type: 'fairy',
+        color: {
+            default: '#EE99AC',
+            light: '#F4BDC9'
+        },
+        pokemons: {
+            primary: [],
+            secondary: []
+        }
+    }
+];
 
 
 async function init() {
-    console.time('Load all Pokemon from API');
+    await fetchPokemonTypes();
     await loadAllPokemon();
-    console.timeEnd('Load all Pokemon from API');
     showAllPokemons();
 }
-
 
 /**
  * 
  * @param {number} pokemonId 
  */
 async function showPokemon(pokemonId) {
-    console.time('Load one Pokemon');
     currentPokemon = await fetchPokemon(pokemonId);
+    currentPokemonColors = pokemonAll[currentPokemon.id - 1].color;
     currentPokemonEvolution = await fetchEvolution(pokemonId);
-    console.timeEnd('Load one Pokemon');
     getElementById('content').style.display = '';
     renderPokemonInfo();
-    renderAbout('about');
+    renderMenuAbout('about');
     setTimeout(() => {
         document.addEventListener("click", handleOutsideClick);
     }, 200);
@@ -42,7 +274,7 @@ async function showPokemon(pokemonId) {
  */
 function handleOutsideClick(event) {
     const card = getElementById('card');
-    const closeButton = getElementById('arrow');
+    const closeButton = getElementById('close');
     if (!card.contains(event.target) && event.target !== closeButton) {
         document.removeEventListener("click", handleOutsideClick);
         closeDetails();
@@ -59,43 +291,25 @@ function closeDetails() {
 
 
 /**
- * @description Load basic pokemon data from the API
- */
-async function loadAllPokemon() {
-    for (let j = 0; j <= 112; j++) {
-        for (let i = 1 + (j * 9); i <= ((1 + j) * 9); i++) {
-            const baseUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
-            const url = new URL(i, baseUrl);
-            const res = await fetch(url.toJSON());
-            const pokemonData = await res.json();
-            const id = pokemonData.id;
-            const name = pokemonData.name;
-            const types = pokemonData.types.map(type => type.type.name).join(', ');
-            const pokemonInfo = { id, name, types };
-            pokemonAll.push(pokemonInfo);
-        }
-    }
-}
-
-
-/**
  * @description Show all Pokemon
  */
-function showAllPokemons() {    
-    console.time('Show all Pokemons');
-    getElementById('overview').innerHTML = '';
-    for (let i = 0; i < pokemonAll.length; i++) {
-        const element = pokemonAll[i];
-        getElementById('overview').innerHTML += pokemonOverviewTemplate(element)
-    }
-    console.timeEnd('Show all Pokemons');
-    getElementById('searchValue').value = '';
+function showAllPokemons() {
+    pokemonAll.forEach((element, index) => {
+        const startindex = loadedPokemon;
+        const endindex = startindex + chunk;
+        const maxindex = 1017;
+        if (index >= startindex && index < endindex && index < maxindex) {
+            element.color = settingPokemonTypeColors(element);
+            getElementById('overview').innerHTML += pokemonOverviewTemplate(element);
+        }
+    })
+    loadedPokemon += 50;
 }
 
 
 /**
  * @description Loading basic data from a specific pokeman from the API
- * @param {string} pokemon 
+ * @param {number} pokemon 
  */
 async function fetchPokemon(pokemon) {
     const baseUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
@@ -107,7 +321,7 @@ async function fetchPokemon(pokemon) {
 
 /**
  * @description Loading species data from a specific pokeman from the API
- * @param {string} pokemon 
+ * @param {number} pokemon 
  * @returns 
  */
 async function fetchEvolution(pokemon) {
@@ -122,26 +336,134 @@ async function fetchEvolution(pokemon) {
 
 
 /**
+ * @description Load basic pokemon data from the API
+ */
+async function loadAllPokemon() {
+    const data = await fetchPokemonDetails();
+    pokemonAll = data.pokemon_entries.map(entry => {
+        return {
+            id: entry.entry_number,
+            name: entry.pokemon_species.name,
+            types: getTypesByPokemonName(entry.pokemon_species.name),
+        };
+    });
+}
+
+
+/**
+ * @description Setting the Pokemon Type Colours
+ * @param {object} element 
+ */
+function settingPokemonTypeColors(element) {
+    let colorObject = {};
+    pokemonTypes.forEach(v => {
+        if (v.type === element.types.primary) {
+            colorObject.colorDefault = v.color.default;
+            colorObject.lightPrimary = v.color.light;
+        }
+        if (v.type === element.types.secondary) {
+            colorObject.lightSecondary = v.color.light;
+        }
+    });
+    return colorObject;
+}
+
+
+/**
+ * @description Loading all pokemon ids and names from the API
+ * @returns
+ */
+async function fetchPokemonDetails() {
+    const baseUrl = new URL('https://pokeapi.co/api/v2/pokedex/1');
+    const res = await fetch(baseUrl.toJSON());
+    return await res.json();
+}
+
+
+/**
+ * @description Assign Pokemon Type 
+ */
+async function fetchPokemonTypes() {
+    for (const type of pokemonTypes) {
+        const detail = await fetchPokemonTypeDetails(type.id);
+        detail.pokemon.forEach(v => {
+            v.slot === 2 ? type.pokemons.secondary.push(v.pokemon.name) : type.pokemons.primary.push(v.pokemon.name);
+        })
+
+    }
+}
+
+
+/**
+ * @description Loading all Pokemon IDs and names from one type
+ * @param {number} id 
+ * @returns
+ */
+async function fetchPokemonTypeDetails(id) {
+    const res = await fetch(`https://pokeapi.co/api/v2/type/${id}`);
+    return await res.json();
+}
+
+
+/**
+ * @description Assign Pokemon Type
+ * @param {string} name 
+ * @returns 
+ */
+function getTypesByPokemonName(name) {
+    const types = {};
+    for (const type of pokemonTypes) {
+        if (type.pokemons.primary.some(type => type.startsWith(name))) {
+            types.primary = type.type;
+        } else if (type.pokemons.secondary.some(type => type.startsWith(name))) {
+            types.secondary = type.type;
+        }
+    }
+    return types;
+}
+
+
+/**
+ * @description Indicate how far the page has been scrolled and whether 80 % has been reached.
+ * @returns {boolean} true or false Page 80% scrolled
+ */
+function hasScrolled80Percent() {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.body.clientHeight;
+    const scrollY = window.scrollY;
+    return (scrollY + windowHeight) / documentHeight >= 0.8;
+}
+
+
+// When 80% of the page has been loaded, more Pokemons are loaded
+window.addEventListener('scroll', function () {
+    if (hasScrolled80Percent()) {
+        showAllPokemons();
+    }
+});
+
+
+/**
  * @description Render Pokemon details
  */
 function renderPokemonInfo() {
     // Load Pokemon image
-    pokemonImage();
+    showCurrentPokemonImage();
     // Include navigation
-    detailsNav();
+    showCurrentPokemonDetailsNav();
     // Set Pokemon Name in the detail view 
-    pokemonName();
+    getCurrentPokemonName();
     // Set background & second color in the detail view 
-    pokemonColor();
+    setCurrentPokemonColors();
     // Show Pokemon ID formatted in the detail view 
-    pokemonId();
+    showCurrentPokemonId();
 }
 
 
 /**
  * @description Include navigation
  */
-function detailsNav() {
+function showCurrentPokemonDetailsNav() {
     const currentSection = getElementById('pokemonDetailsNav');
     currentSection.innerHTML = '';
     currentSection.innerHTML = detailsNavTemplate();
@@ -151,7 +473,7 @@ function detailsNav() {
 /**
  * @description Load Pokemon Image
  */
-function pokemonImage() {
+function showCurrentPokemonImage() {
     getImageElementById('pokemonImage').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${currentPokemon.id}.png`;
 }
 
@@ -159,7 +481,7 @@ function pokemonImage() {
 /**
  * @description Set Pokemon Name in the detail view 
  */
-function pokemonName() {
+function getCurrentPokemonName() {
     const pokemonName = showFirstLetterUppercase(currentPokemon.name);
     getElementById('pokemonName').innerHTML = pokemonName;
 }
@@ -168,8 +490,8 @@ function pokemonName() {
 /**
  * @description Set background & second color in the detail view 
  */
-function pokemonColor() {
-    getElementById('card').style.backgroundColor = `var(--bg-color-${pokemonMainType()})`;
+function setCurrentPokemonColors() {
+    getElementById('card').style.backgroundColor = currentPokemonColors.colorDefault;
     mainAndSecondType();
 }
 
@@ -177,7 +499,7 @@ function pokemonColor() {
 /**
  * @description Show Pokemon ID formatted in the detail view 
  */
-function pokemonId() {
+function showCurrentPokemonId() {
     getElementById('pokemonId').innerHTML = `#${currentPokemon.id.toString().padStart(3, '0')}`;
 }
 
@@ -186,7 +508,7 @@ function pokemonId() {
  * @description Returns the main type of the Pokemon
  * @returns {string}
  */
-function pokemonMainType() {
+function getPrimaryTypeCurrentPokemon() {
     return currentPokemon.types[0].type['name'];
 }
 
@@ -199,7 +521,7 @@ function mainAndSecondType() {
     const moves = currentPokemon.types.map((v, index) => {
         const type = showFirstLetterUppercase(v.type.name);
         getElementById('pokemonElemente').innerHTML += `<span id="type${index}">${type}</span>`;
-        getElementById(`type${index}`).style.backgroundColor = `var(--bg-color-${v.type.name}-light)`;
+        getElementById(`type${index}`).style.backgroundColor = `${index === 0 ? currentPokemonColors.lightPrimary : currentPokemonColors.lightSecondary}`;
     });
 }
 
@@ -210,7 +532,7 @@ function mainAndSecondType() {
  * @returns {string} 
  */
 function showFirstLetterUppercase(string) {
-    return string[0].toUpperCase() + string.slice(1);
+    return string[0].toUpperCase() + string.slice(1)
 }
 
 
@@ -218,18 +540,18 @@ function showFirstLetterUppercase(string) {
  * @description Show "About" chart on the Pokemon card
  * @param {Menu} menu 
  */
-function renderAbout(menu) {
+function renderMenuAbout(menu) {
     selectMenuPoint(menu);
     const currentSection = getElementById('pokemonDetailsContent');
     currentSection.innerHTML = aboutTemplate();
-    pokemonAbilities();
+    showCurrentPokemonAbilities();
 }
 
 
 /**
  * @description Data for the abilities in the "About" menu item
  */
-function pokemonAbilities() {
+function showCurrentPokemonAbilities() {
     getElementById('abilities').innerHTML = '';
     const abilityNames = currentPokemon.abilities.map(value => showFirstLetterUppercase(value.ability.name)).join(', ');
     getElementById('abilities').innerHTML += abilityNames;
@@ -242,13 +564,7 @@ function pokemonAbilities() {
  */
 function renderBaseStats(menu) {
     selectMenuPoint(menu);
-    const mainStyle = getComputedStyle(document.documentElement);
-    const color1 = mainStyle.getPropertyValue(`--bg-color-${pokemonMainType()}`);
-    const color2 = mainStyle.getPropertyValue(`--bg-color-${pokemonMainType()}-light`);
-    const currentSection = getElementById('pokemonDetailsContent');
-    currentSection.innerHTML = baseStatsTemplate();
-    const dataArray = [];
-    currentPokemon.stats.map(v => dataArray.push(v.base_stat));
+    getElementById('pokemonDetailsContent').innerHTML = baseStatsTemplate();
     const ctx = getElementById('baseStats');
     new Chart(ctx, {
         type: 'bar',
@@ -257,10 +573,10 @@ function renderBaseStats(menu) {
             datasets: [{
                 barThickness: 8,
                 maxBarThickness: 20,
-                data: dataArray,
+                data: currentPokemon.stats.map(v => v.base_stat),
                 borderWidth: 0,
                 label: '',
-                backgroundColor: [color1, color2, color1, color2, color1, color2]
+                backgroundColor: [currentPokemonColors.colorDefault, currentPokemonColors.lightPrimary]
             }]
         },
         options: {
@@ -301,10 +617,10 @@ function renderMoves(menu) {
     const currentSection = getElementById('pokemonDetailsContent');
     currentSection.innerHTML = renderMovesTemplate();
     getElementById('pokemonMoves').innerHTML = '';
-    const moves = currentPokemon.moves.map((v) => {
+    currentPokemon.moves.forEach((v) => {
         const move = showFirstLetterUppercase(v.move.name);
         getElementById('pokemonMoves').innerHTML += `<p class="moves">${move}</p>`;
-        document.querySelectorAll(".moves").forEach(v => v.style.backgroundColor = `var(--bg-color-${pokemonMainType()})`);
+        document.querySelectorAll(".moves").forEach(v => v.style.backgroundColor = currentPokemonColors.colorDefault);
     });
 }
 
@@ -347,15 +663,4 @@ function pokemonEvolutionChain() {
         }
     }
     return evolutionChain;
-}
-
-
-/**
- * Like On/Off - Value will NOT be stored.
- */
-function heartOnOff() {
-    let currentImage = getImageElementById('heart').src;
-    currentImage = currentImage.substring(currentImage.lastIndexOf('/') + 1);
-    const newImage = currentImage === 'heart-open-50.png' ? 'heart-close-50.png' : 'heart-open-50.png';
-    getImageElementById('heart').src = 'img/' + newImage;
 }

@@ -49,12 +49,12 @@ function closeDetails() {
 
 /**
  * @description Create current Pokemon array - either all Pokemon or using the search request
- * @param {string} searchMode 
+ * @param {boolean} searchMode 
  */
-function createCurrentPokemonArray(searchMode = '') {
+function createCurrentPokemonArray(searchMode = false) {
     loadedPokemon = 0;
     getElementById('overview').innerHTML = '';
-    if (searchMode === 'search') {
+    if (searchMode) {
         const searchValue = getInputElementById('searchValue').value;
         currentPokemonArray = pokemonAll.filter((v) => v.name.includes(searchValue.toLowerCase()));
         getInputElementById('searchValue').value = '';
@@ -397,6 +397,9 @@ function renderMoves(menu) {
         getElementById('pokemonMoves').innerHTML += `<p class="moves">${move}</p>`;
         document.querySelectorAll(".moves").forEach(v => v.style.backgroundColor = currentPokemonColors.colorDefault);
     });
+    // console.log(currentPokemon.color.default);
+    getElementById('pokemonMoves').style.scrollbarColor = '#C03028';
+    // currentPokemon.color.default;
 }
 
 

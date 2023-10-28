@@ -69,6 +69,7 @@ function createCurrentPokemonArray(searchMode = false) {
  * @description Show all Pokemon
  */
 function showAllPokemons() {
+    getElementById('wrapper').style.display = 'none';
     currentPokemonArray.forEach((element, index) => {
         const startindex = loadedPokemon;
         const endindex = startindex + chunk;

@@ -2,52 +2,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Monterrat', sans-serif;
-    background-image: url(../img/pokedex_bg.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-:root {
-    /* Background & BG-Chart*/
-    --bg-color-fire: #f08031;
-    --bg-color-psychic: #f85888;
-    --bg-color-normal: #a8a878;
-    --bg-color-flying: #a890ef;
-    --bg-color-steel: #b8b8d0;
-    --bg-color-water: #6890f0;
-    --bg-color-dragon: #7038f7;
-    --bg-color-ground: #e3c76a;
-    --bg-color-rock: #b8a038;
-    --bg-color-dark: #705848;
-    --bg-color-grass: #78c850;
-    --bg-color-ghost: #705898;
-    --bg-color-ice: #98d8d8;
-    --bg-color-electric: #f8d031;
-    --bg-color-bug: #a8b820;
-    --bg-color-poison: #a041a0;
-    --bg-color-fighting: #c03028;
-    --bg-color-fairy: #ee99ac;
-
-    /* Second Background & Second BG-Chart*/
-    --bg-color-fire-light: #f5ac78;
-    --bg-color-psychic-light: #fa92b3;
-    --bg-color-normal-light: #c6c6a7;
-    --bg-color-flying-light: #a890f0;
-    --bg-color-steel-light: #d1d1e0;
-    --bg-color-water-light: #9db7f5;
-    --bg-color-dragon-light: #a27dfa;
-    --bg-color-ground-light: #ead69d;
-    --bg-color-rock-light: #d1c17c;
-    --bg-color-dark-light: #a29288;
-    --bg-color-grass-light: #a7db8d;
-    --bg-color-ghost-light: #a292b6;
-    --bg-color-ice-light: #bce6e6;
-    --bg-color-electric-light: #fae078;
-    --bg-color-bug-light: #c6d16e;
-    --bg-color-poison-light: #c183c1;
-    --bg-color-fighting-light: #d67873;
-    --bg-color-fairy-light: #f4bdc9;
 }
 
 .content {
@@ -161,6 +115,7 @@ body {
 
 .pokemon_image img {
     height: 220px;
+    transition: 250ms ease-in-out;
 }
 
 .pokemon_image img:hover {
@@ -285,6 +240,7 @@ body {
 
 .evolution_header_img_right img,
 .evolution_header_img_left img {
+    transition: 250ms ease-in-out;
     width: 80px;
 }
 
@@ -341,10 +297,7 @@ body {
     width: 100vw;
     height: 100px;
     text-align: center;
-    background-image: url(../img/pokedex_bg.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: white;
     display: flex;
     flex-direction: row;
     justify-content: center;

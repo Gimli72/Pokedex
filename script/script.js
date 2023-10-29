@@ -219,6 +219,14 @@ window.addEventListener('scroll', function () {
 });
 
 
+// Check if the Enter key is pressed and there is an input in the search field. If Yes Search request
+window.addEventListener("keypress", function (event) {
+    if (event.key === "Enter" && getInputElementById('searchValue').value !== '') {
+        createCurrentPokemonArray(true);
+    }
+});
+
+
 /**
  * @description Render Pokemon details
  */
@@ -294,7 +302,7 @@ function getPrimaryTypeCurrentPokemon() {
  */
 function mainAndSecondType() {
     getElementById('pokemonElemente').innerHTML = '';
-    const moves = currentPokemon.types.map((v, index) => {
+    currentPokemon.types.forEach((v, index) => {
         const type = showFirstLetterUppercase(v.type.name);
         getElementById('pokemonElemente').innerHTML += `<span id="type${index}">${type}</span>`;
         getElementById(`type${index}`).style.backgroundColor = `${index === 0 ? currentPokemonColors.lightPrimary : currentPokemonColors.lightSecondary}`;
@@ -398,9 +406,6 @@ function renderMoves(menu) {
         getElementById('pokemonMoves').innerHTML += `<p class="moves">${move}</p>`;
         document.querySelectorAll(".moves").forEach(v => v.style.backgroundColor = currentPokemonColors.colorDefault);
     });
-    // console.log(currentPokemon.color.default);
-    getElementById('pokemonMoves').style.scrollbarColor = '#C03028';
-    // currentPokemon.color.default;
 }
 
 
